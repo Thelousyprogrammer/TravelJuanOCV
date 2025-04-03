@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
           <Text style={styles.balanceLabel}>Card Balance</Text>
           <Text style={styles.balanceAmount}>₱{userData.balance.toFixed(2)}</Text>
           <Image
-            source={require('./assets/train-icon.png')}
+            source={require('../assets/images/train-icon.png')}
             style={styles.trainIcon}
           />
         </View>
@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         
         <View style={styles.stationImageContainer}>
           <Image
-            source={require('./assets/station-image.jpg')}
+            source={require('../assets/images/station-image.png')}
             style={styles.stationImage}
           />
           <View style={styles.stationInfoOverlay}>
