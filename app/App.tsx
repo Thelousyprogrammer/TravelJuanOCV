@@ -233,7 +233,7 @@ export default function App() {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+            let iconName = 'home-outline';  // Initialize with default value
 
             if (route.name === 'Home') {
               iconName = focused ? 'home' : 'home-outline';
