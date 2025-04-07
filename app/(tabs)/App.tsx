@@ -1,7 +1,7 @@
 // App.js - Main React Native Application
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
-import { NavigationContainer, NavigationProp } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -15,7 +15,7 @@ const mockUserData = {
 };
 
 // Home Screen Component
-const HomeScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
+const HomeScreen = ({ navigation }: { navigation: any }) => {
   const [userData, setUserData] = useState(mockUserData);
   const [station, setStation] = useState({
     name: 'Anonas Station',
@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
           <Text style={styles.balanceLabel}>Card Balance</Text>
           <Text style={styles.balanceAmount}>₱{userData.balance.toFixed(2)}</Text>
           <Image
-            source={require('../assets/images/train-icon.png')}
+            source={require('../../assets/images/train-icon.png')}
             style={styles.trainIcon}
           />
         </View>
@@ -98,7 +98,7 @@ const HomeScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         
         <View style={styles.stationImageContainer}>
           <Image
-            source={require('../assets/images/station-image.png')}
+            source={require('../../assets/images/station-image.jpg')}
             style={styles.stationImage}
           />
           <View style={styles.stationInfoOverlay}>
@@ -229,35 +229,33 @@ const ProfileScreen = () => {
 // Main App Component
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName = 'home-outline';  // Initialize with default value
+    <Tab.Navigator
+      screenOptions={({ route }: { route: { name: string } }) => ({
+        tabBarIcon: ({ focused, color, size }: { focused: boolean; color: string; size: number }) => {
+          let iconName = 'home-outline';  // Initialize with default value
 
-            if (route.name === 'Home') {
-              iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Ride') {
-              iconName = focused ? 'bus' : 'bus-outline';
-            } else if (route.name === 'Tickets') {
-              iconName = focused ? 'ticket' : 'ticket-outline';
-            } else if (route.name === 'Profile') {
-              iconName = focused ? 'person' : 'person-outline';
-            }
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Ride') {
+            iconName = focused ? 'bus' : 'bus-outline';
+          } else if (route.name === 'Tickets') {
+            iconName = focused ? 'ticket' : 'ticket-outline';
+          } else if (route.name === 'Profile') {
+            iconName = focused ? 'person' : 'person-outline';
+          }
 
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: '#FF5722',
-          tabBarInactiveTintColor: 'gray',
-          headerShown: false,
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Ride" component={RideScreen} />
-        <Tab.Screen name="Tickets" component={TicketsScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#FF5722',
+        tabBarInactiveTintColor: 'gray',
+        headerShown: false,
+      })}
+    >
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Ride" component={RideScreen} />
+      <Tab.Screen name="Tickets" component={TicketsScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 
