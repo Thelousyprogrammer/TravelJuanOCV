@@ -16,7 +16,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       navigation.replace('Login');
-    }, 10000); // 3 seconds
+    }, 3000); // 3 seconds
 
     return () => clearTimeout(timeout); // Cleanup timeout on unmount
   }, [navigation]);
