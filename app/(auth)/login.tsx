@@ -1,14 +1,12 @@
+import { Link } from 'expo-router';
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Alert, Image } from 'react-native';
-import { Link, useRouter } from 'expo-router';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { Alert, Image, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { auth } from '../../data/config/firebase';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -18,8 +16,8 @@ export default function Login() {
 
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // No need to navigate here - the Root Layout will handle redirection
+      await auth.signInWithEmailAndPassword(email, password);
+      // Navigation is handled by RootLayout
     } catch (error: any) {
       console.error('Login error:', error);
       Alert.alert('Login Failed', error.message || 'An unexpected error occurred');
@@ -30,16 +28,10 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      {/* Logo/Image Section */}
       <View style={styles.logoContainer}>
-        <Image
-          source={require('../../assets/images/TravelJuan.png')} 
-          style={styles.logo}
-        />
+        <Image source={require('../../assets/images/TravelJuan.png')} style={styles.logo} />
       </View>
-      
       <Text style={styles.title}>Hello!</Text>
-      
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -48,7 +40,6 @@ export default function Login() {
         autoCapitalize="none"
         keyboardType="email-address"
       />
-      
       <TextInput
         style={styles.input}
         placeholder="Password"
@@ -56,17 +47,9 @@ export default function Login() {
         onChangeText={setPassword}
         secureTextEntry
       />
-      
-      <Pressable 
-        style={styles.button} 
-        onPress={handleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? 'Signing in...' : 'Sign In'}
-        </Text>
+      <Pressable style={styles.button} onPress={handleLogin} disabled={loading}>
+        <Text style={styles.buttonText}>{loading ? 'Signing in...' : 'Sign In'}</Text>
       </Pressable>
-      
       <View style={styles.linkContainer}>
         <Text>Don't have an account? </Text>
         <Link href="/register">

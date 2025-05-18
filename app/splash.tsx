@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect } from 'react';
+import { Image, StyleSheet } from 'react-native';
 
 type RootStackParamList = {
   Splash: undefined;

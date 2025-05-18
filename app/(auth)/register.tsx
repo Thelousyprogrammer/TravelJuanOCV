@@ -1,8 +1,7 @@
-import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Alert } from 'react-native';
 import { Link, useRouter } from 'expo-router';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { useState } from 'react';
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { auth } from '../../data/config/firebase';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -19,15 +18,10 @@ export default function Register() {
 
     setLoading(true);
     try {
-      // Create the user with email and password
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      
-      // Update the user's profile with their name
-      await updateProfile(userCredential.user, {
+      const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+      await userCredential.user.updateProfile({
         displayName: name,
       });
-      
-      // No need to navigate - Root Layout will handle redirection
     } catch (error: any) {
       console.error('Registration error:', error);
       Alert.alert('Registration Failed', error.message || 'An unexpected error occurred');
@@ -64,8 +58,8 @@ export default function Register() {
         secureTextEntry
       />
       
-      <Pressable 
-        style={styles.button} 
+      <Pressable
+        style={styles.button}
         onPress={handleRegister}
         disabled={loading}
       >
